@@ -14,12 +14,13 @@ body=getHTML('https://www.navitime.co.jp/category/0201001001')
 selectPref=body.find('select', {'id':'prefecture_select'})
 prefList=selectPref.findChildren('option')
 for prefecture in prefList:
-	if(prefecture['value']=="01"):
+	if(prefecture['value']!=""):
+		file=open('txt_files/'+prefecture.text+'.txt', 'w')
 		#this request return a json obj with cities id which will be used for switch pages
 		html=requests.get('https://www.navitime.co.jp/async/category/addressList?addressCode=%s'%prefecture['value'])
 		js=json.loads(html.text)
 		for code in js:
-			if(code['code']=='01101'):
+			#if(code['code']=='01101'):
 				page=1
 				while True:
 					body=getHTML('https://www.navitime.co.jp/category/0201001001/%s?page=%s'%(code['code'], page))
@@ -42,11 +43,15 @@ for prefecture in prefList:
 							#print(work_time)
 							name=link.text
 							addr=dl.find('dd').contents[0]
+							file.write('%s\n%s\n'%(name.encode('utf-8'), addr.encode('utf-8')))
 							
 							
 					else:
 						break
-				
+				print('%s has done'%code['name'])
+		
+		file.close()
+		print('%s has done'%prefecture.text)		
 		#print(body)
 		#selectCity=body.find('select', {'id':'city_select'})
 		#cityList=selectCity.findChildren('option')
