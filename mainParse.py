@@ -32,7 +32,7 @@ for prefecture in prefList:
 				#if it was found there is page with page number, else out of page list, end loop
 				if(linkDl):
 					page=page+1
-						for dl in linkDl:
+					for dl in linkDl:
 						link=dl.find('a')
 						name=link.text
 						addr=dl.find('dd').contents[0]
