@@ -18,7 +18,7 @@ prefList=selectPref.findChildren('option')
 recordCount=0
 startTime=datetime.now()
 for prefecture in prefList:
-	if(prefecture['value']=="01"):
+	if(prefecture['value']!=""):
 		file=open('txt_files/'+prefecture.text+'.txt', 'w')
 		#this request return a json obj with cities id which will be used for switch pages
 		html=requests.get('https://www.navitime.co.jp/async/category/addressList?addressCode=%s'%prefecture['value'])
