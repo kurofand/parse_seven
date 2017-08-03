@@ -32,6 +32,8 @@ for prefecture in prefList:
 				#if it was found there is page with page number, else out of page list, end loop
 				if(linkDl):
 					page=page+1
+					sleep(5)
+					#sleep 5 seconds for each page, cose I am not a robot and need some time to see page
 					for dl in linkDl:
 						link=dl.find('a')
 						name=link.text
@@ -44,7 +46,7 @@ for prefecture in prefList:
 		
 		file.close()
 		print('%s has done'%prefecture.text)
-		time.sleep(120)	
+		time.sleep(180)#three minute	
 print('All done, %s records writed'%recordCount)
 endTime=datetime.now()
 print('It taked %s'%str(endTime-startTime))
