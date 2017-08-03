@@ -41,10 +41,10 @@ for prefecture in prefList:
 				else:
 					break
 			print('%s has done'%code['name'])
-			time.sleep(120);
 		
 		file.close()
-		print('%s has done'%prefecture.text)		
+		print('%s has done'%prefecture.text)
+		time.sleep(120)	
 print('All done, %s records writed'%recordCount)
 endTime=datetime.now()
 print('It taked %s'%str(endTime-startTime))
