@@ -3,6 +3,8 @@
 import requests
 import json
 from bs4 import BeautifulSoup
+from datetime import datetime
+
 
 def getHTML(url):
 	html=requests.get(url)
@@ -13,8 +15,10 @@ def getHTML(url):
 body=getHTML('https://www.navitime.co.jp/category/0201001001')
 selectPref=body.find('select', {'id':'prefecture_select'})
 prefList=selectPref.findChildren('option')
+recordCount=0
+startTime=datetime.now()
 for prefecture in prefList:
-	if(prefecture['value']!=""):
+	if(prefecture['value']=="01"):
 		file=open('txt_files/'+prefecture.text+'.txt', 'w')
 		#this request return a json obj with cities id which will be used for switch pages
 		html=requests.get('https://www.navitime.co.jp/async/category/addressList?addressCode=%s'%prefecture['value'])
@@ -44,6 +48,7 @@ for prefecture in prefList:
 							name=link.text
 							addr=dl.find('dd').contents[0]
 							file.write('%s\n%s\n'%(name.encode('utf-8'), addr.encode('utf-8')))
+							recordCount=recordCount+1
 							
 							
 					else:
@@ -58,3 +63,6 @@ for prefecture in prefList:
 		#for city in cityList:
 		#	if(city['value']!=""):
 		#		print(city.text)
+print('All done, %s records writed'%recordCount)
+endTime=datetime.now()
+print('It taked %s'%str(endTime-startTime))
