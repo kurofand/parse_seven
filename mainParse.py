@@ -4,7 +4,7 @@ import requests
 import json
 from bs4 import BeautifulSoup
 from datetime import datetime
-
+import time
 
 def getHTML(url):
 	html=requests.get(url)
@@ -41,6 +41,7 @@ for prefecture in prefList:
 				else:
 					break
 			print('%s has done'%code['name'])
+			time.sleep(120);
 		
 		file.close()
 		print('%s has done'%prefecture.text)		
